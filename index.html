@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>React Frame</title>
+  <style type="text/css">
+    body {
+      color: #222;
+      font-family: "Helvetica Neue", sans-serif;
+      font-weight: 200;
+      margin: 0 50px;
+    }
+
+    .react-draggable, .cursor {
+      cursor: move;
+    }
+    .no-cursor {
+      cursor: auto;
+    }
+    .cursor-y {
+      cursor: ns-resize;
+    }
+    .cursor-x {
+      cursor: ew-resize;
+    }
+
+    .react-draggable strong {
+      background: #ddd;
+      border: 1px solid #999;
+      border-radius: 3px;
+      display: block;
+      margin-bottom: 10px;
+      padding: 3px 5px;
+      text-align: center;
+    }
+	
+	.show {
+		display: block;
+	}
+	.hide {
+		display: none;
+	}
+
+    .box {
+		position:absolute;
+      box-sizing: border-box;
+      background: #fff;
+      border: 1px solid #999;
+      border-radius: 3px;
+      width: 180px;
+      height: 180px;
+      margin: 10px;
+      padding: 10px;
+      float: left;
+    }
+	.top {
+		width: 500px;
+		height:50px;
+		background:#ffff22;
+	}
+	.bottom {
+		width:500px;
+		height:80px;
+		background:#33ff22;
+	}
+	.left {
+		width:100px;
+		height:400px;
+		
+	}
+	.right {
+		width: 400px;
+		height: 400px;
+		background:#999999;
+	}
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 2000ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+/*  opacity: 0.01;
+transition: opacity 1000ms ease-in;*/
+    -webkit-transform: translate3d(100%, 0, 1px);
+    transform: translate3d(100%, 0, 0);
+    -webkit-transition-duration: .5s;
+    transition-duration: .5s;  
+}
+	.button.switch-enter {
+		opacity: 0.01;
+	}
+	.button.switch-enter.switch-enter-active {
+		opacity: 1.0;
+	}
+	.button.switch-leave {
+		/* Completely hide the button while it's being animated and before it's removed from the DOM. */
+		visibility: hidden;
+		height: 0px;
+		width: 0px;
+		
+		/* Starting opacity */
+		opacity: 1.0;
+	}
+	.button.switch-leave.switch-leave-active {
+		/* Ending opacity: 
+		Trigger opacity change so the "transitionend" event will fire, causing React to remove from the DOM. */
+		opacity: 0;
+	}
+
+  </style>
+</head>
+<body>
+<div id=container>
+</div>
+<script src="//fb.me/react-with-addons-0.13.2.js"></script>
+<script src="//fb.me/JSXTransformer-0.13.2.js"></script>
+<script type="text/jsx">
+  var ReactTransitionGroup = React.addons.CSSTransitionGroup;
+  
+
+
+//-------------------------------------------
+var TodoList = React.createClass({
+  getInitialState: function() {
+    return {items: ['hello', 'world', 'click', 'me']};
+  },
+  handleAdd: function() {
+    var newItems =
+      this.state.items.concat([prompt('Enter some text')]);
+    this.setState({items: newItems});
+  },
+  handleRemove: function(i) {
+    var newItems = this.state.items;
+    newItems.splice(i, 1);
+    this.setState({items: newItems});
+  },
+  render: function() {
+    var items = this.state.items.map(function(item, i) {
+      return (
+        <div key={item} onClick={this.handleRemove.bind(this, i)}>
+          {item}
+        </div>
+      );
+    }.bind(this));
+    return (
+      <div>
+        <button onClick={this.handleAdd}>Add Item</button>
+        <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300} >
+          {items}
+        </ReactCSSTransitionGroup>
+      </div>
+    );
+  }
+});
+var todolist = document.createElement("div");
+document.body.appendChild(todolist);
+React.render(<TodoList/>, todolist);
+
+</script>
+</body>
+</html>
