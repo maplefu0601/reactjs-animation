@@ -108,7 +108,7 @@ document.body.appendChild(ddd);
 React.render(<HelloWorld />, ddd);
 
 //-----------------------------------------------
-That's it. It's super easy.
+3, That's it. It's super easy.
 Do remember that you must set the state mounted to true or false after the node is mounted, otherwise there will be no animation.
 
 Just copy all codes to a seperate HTML file, and run on a webserver.
